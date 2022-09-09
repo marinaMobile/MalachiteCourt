@@ -11,28 +11,6 @@ import javax.inject.Inject
 
 class MainViewModel @Inject constructor(): ViewModel()  {
 
-    val conversionDataListener = object : AppsFlyerConversionListener {
-        override fun onConversionDataSuccess(data: MutableMap<String, Any>?) {
-
-            val dataGotten = data?.get("campaign").toString()
-//                val dataGotten = "apps_sub2_sub3_sub4"
-            Hawk.put(CNST.C1, dataGotten)
-            Log.d("devTEST", data.toString())
-        }
-
-        override fun onConversionDataFail(p0: String?) {
-
-        }
-
-        override fun onAppOpenAttribution(p0: MutableMap<String, String>?) {
-
-        }
-
-        override fun onAttributionFailure(p0: String?) {
-        }
-    }
-
-
     fun deePP(context: Context) {
         AppLinkData.fetchDeferredAppLinkData(
             context
@@ -45,7 +23,6 @@ class MainViewModel @Inject constructor(): ViewModel()  {
 //                Log.d("FB_TEST:", conjoined)
 
                 Hawk.put(D1, params.toString())
-
 
             }
             if (appLinkData == null) {

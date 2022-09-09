@@ -12,7 +12,6 @@ import android.webkit.*
 import android.widget.Toast
 import com.appsflyer.AppsFlyerLib
 import com.disney.emojimatch_go.R
-import com.disney.emojimatch_go.black.CNST.C1
 import com.disney.emojimatch_go.black.CNST.D1
 import com.disney.emojimatch_go.black.CNST.MAIN_ID
 import com.onesignal.OneSignal
@@ -247,7 +246,6 @@ class Web : AppCompatActivity() {
     private fun getUrl(): String {
 
         val spoon = getSharedPreferences("SP_WEBVIEW_PREFS", AppCompatActivity.MODE_PRIVATE)
-        val cpOne: String? = Hawk.get(C1)
         val dpOne: String? = Hawk.get(D1)
         val mainid: String = Hawk.get(MAIN_ID)
 
@@ -275,14 +273,7 @@ class Web : AppCompatActivity() {
 
         val resultAB = first + second
 
-        var after = ""
-        if (cpOne != "null") {
-            after =
-                "$resultAB$one$cpOne&$two$afId&$three$mainid&$four$pack&$five$androidVersion&$six$namingI"
-        } else {
-            after =
-                "$resultAB$one$dpOne&$two$afId&$three$mainid&$four$pack&$five$androidVersion&$six$linkornull"
-        }
+        val after = "$resultAB$one$dpOne&$two$afId&$three$mainid&$four$pack&$five$androidVersion&$six$linkornull"
         Log.d("TESTAG", "Test Result $after")
         pushToOneSignal(afId.toString())
         return spoon.getString("SAVED_URL", after).toString()

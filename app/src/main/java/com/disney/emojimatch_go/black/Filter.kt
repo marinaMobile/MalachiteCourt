@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import com.disney.emojimatch_go.R
-import com.disney.emojimatch_go.black.CNST.C1
 import com.disney.emojimatch_go.black.CNST.D1
 import com.disney.emojimatch_go.white.Game
 import com.orhanobut.hawk.Hawk
@@ -49,21 +48,19 @@ class Filter : AppCompatActivity() {
     }
 
     private suspend fun coroutineTask(): String {
-        val hawk: String? = Hawk.get(C1, "null")
+//       val hawk: String? = Hawk.get(C1, "null")
         val hawkAppLink: String? = Hawk.get(D1, "null")
 
-        val forJsoupSetNaming: String = CNST.lru + CNST.odone + hawk
-        val forJsoupSetAppLnk: String = CNST.lru + CNST.odone + hawkAppLink
+
+        //added devModeCheck
+        //  val forJsoupSetNaming: String = CNST.lru + CNST.odone + hawk + "&" + CNST.twoSub + hawkDevOrNot
+        val forJsoupSetAppLnk: String = CNST.lru + CNST.odone + hawkAppLink + "&" +  CNST.twoSub
 
         withContext(Dispatchers.IO) {
-            //changed logical null to string null
-            if (hawk != "null") {
-                getCodeFromUrl(forJsoupSetNaming)
-                Log.d("Check1C", forJsoupSetNaming)
-            } else {
-                getCodeFromUrl(forJsoupSetAppLnk)
-                Log.d("Check1C", forJsoupSetAppLnk)
-            }
+
+            getCodeFromUrl(forJsoupSetAppLnk)
+            Log.d("Check1C", forJsoupSetAppLnk)
+
         }
         return jsoup
     }

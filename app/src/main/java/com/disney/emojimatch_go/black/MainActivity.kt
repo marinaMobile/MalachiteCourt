@@ -1,8 +1,11 @@
 package com.disney.emojimatch_go.black
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.provider.Settings
 import android.util.Log
 import androidx.activity.viewModels
 import com.appsflyer.AppsFlyerLib
@@ -20,6 +23,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
         val prefs = getSharedPreferences("ActivityPREF", MODE_PRIVATE)
         if (prefs.getBoolean("activity_exec", false)) {
             Intent(this, Filter::class.java).also { startActivity(it) }
@@ -30,34 +34,19 @@ class MainActivity : AppCompatActivity() {
             exec.apply()
         }
 
-
         viewModel.deePP(this)
-        AppsFlyerLib.getInstance()
-            .init(CNST.AF_DEV_KEY, viewModel.conversionDataListener, applicationContext)
-        AppsFlyerLib.getInstance().start(this)
-        afNullRecordedOrNotChecker(1500)
+        Handler().postDelayed({
+            toTestGrounds()
+        }, 2000)
+
     }
+
+
     private fun toTestGrounds() {
         Intent(this, Filter::class.java)
             .also { startActivity(it) }
         finish()
-
     }
 
-    private fun afNullRecordedOrNotChecker(timeInterval: Long): Job {
-        return CoroutineScope(Dispatchers.IO).launch {
-            while (NonCancellable.isActive) {
-                val hawk1: String? = Hawk.get(CNST.C1)
-                if (hawk1 != null) {
-                    Log.d("TestInUIHawk", hawk1.toString())
-                    toTestGrounds()
-                    break
-                } else {
-                    val hawk1: String? = Hawk.get(CNST.C1)
-                    Log.d("TestInUIHawkNulled", hawk1.toString())
-                    delay(timeInterval)
-                }
-            }
-        }
-    }
 }
+
